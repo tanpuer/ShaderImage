@@ -16,6 +16,7 @@ add_library( # Sets the name of the library.
 
         base/gl_utils.cpp
         base/Looper.cpp
+        base/utils.cpp
 
         image/ImageLooper.cpp
         image/ImageRenderer.cpp

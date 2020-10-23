@@ -8,6 +8,7 @@
 #include <GLES3/gl3.h>
 #include <android/bitmap.h>
 #include "assert.h"
+#include "../base/utils.h"
 
 ImageRenderer::ImageRenderer(JavaVM *javaVM, jobject shaderImageView) {
     ALOGD("ImageRenderer init")
@@ -49,6 +50,7 @@ void ImageRenderer::ImageCreated(int width, int height) {
 }
 
 void ImageRenderer::ImageDoFrame() {
+    long startTime = javaTimeMillis();
     jclass clazz = env->GetObjectClass(shaderImageView);
     assert(clazz != nullptr);
     // 读取 bitmap 的像素内容到 native 内存
@@ -121,6 +123,9 @@ void ImageRenderer::ImageDoFrame() {
     checkGLError("glReadPixels");
     memcpy(bitmapPixels, buffer, size);
     AndroidBitmap_unlockPixels(env, bitmap);
+
+    long endTime = javaTimeMillis();
+    ALOGD("process image cost time: %ld", endTime - startTime)
 }
 
 void ImageRenderer::ImageDestroyed() {
