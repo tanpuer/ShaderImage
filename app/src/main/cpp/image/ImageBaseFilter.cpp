@@ -5,41 +5,6 @@
 #include "ImageBaseFilter.h"
 #include "../base/gl_utils.h"
 
-#define GET_STR(x) #x
-
-static const char *VERTEX_SHADER_STR = GET_STR(
-        attribute vec4 aPosition;
-        uniform mat4 uTextureMatrix;
-        attribute vec4 aTextureCoordinate;
-        varying vec2 vTextureCoord;
-        void main() {
-            vTextureCoord = (uTextureMatrix * aTextureCoordinate).xy;
-            gl_Position = aPosition;
-        }
-);
-
-static const char *FRAGMENT_SHADER_STR = GET_STR(
-        precision highp float;
-        varying vec2 vTextureCoord;
-        uniform sampler2D uTexture;
-        void main() {
-            gl_FragColor = vec4(texture2D(uTexture, vTextureCoord).xyz, 0.4);
-//            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-        }
-);
-
-ImageBaseFilter::ImageBaseFilter() {
-    vertexShader = loadShader(GL_VERTEX_SHADER, VERTEX_SHADER_STR);
-    fragmentShader = loadShader(GL_FRAGMENT_SHADER, FRAGMENT_SHADER_STR);
-    program = createShaderProgram(vertexShader, fragmentShader);
-    glUseProgram(program);
-    textureMatrix = new ESMatrix();
-    setIdentityM(textureMatrix);
-    texture = createTexture(GL_TEXTURE_2D);
-    ALOGD("program %d %d %d %d", program, fragmentShader, vertexShader, texture)
-    checkGLError("ImageBaseFilter");
-}
-
 ImageBaseFilter::~ImageBaseFilter() {
     glDeleteProgram(program);
     glDeleteShader(vertexShader);
@@ -47,6 +12,18 @@ ImageBaseFilter::~ImageBaseFilter() {
     glDeleteTextures(1, &texture);
     delete textureMatrix;
     ALOGD("ImageBaseFilter release")
+}
+
+void ImageBaseFilter::init() {
+    vertexShader = loadShader(GL_VERTEX_SHADER, getVertexShaderString());
+    fragmentShader = loadShader(GL_FRAGMENT_SHADER, getFragmentShaderString());
+    program = createShaderProgram(vertexShader, fragmentShader);
+    glUseProgram(program);
+    textureMatrix = new ESMatrix();
+    setIdentityM(textureMatrix);
+    texture = createTexture(GL_TEXTURE_2D);
+    ALOGD("program %d %d %d %d", program, fragmentShader, vertexShader, texture)
+    checkGLError("ImageBaseFilter");
 }
 
 void ImageBaseFilter::setImageViewSize(int width, int height) {
@@ -95,4 +72,29 @@ void ImageBaseFilter::doFrame(void *pixels, GLenum format) {
 
     glBindTexture(GL_TEXTURE_2D, 0);
     checkGLError("doFrameOver");
+}
+
+const char *ImageBaseFilter::getVertexShaderString() {
+    return GET_STR(
+            attribute vec4 aPosition;
+            uniform mat4 uTextureMatrix;
+            attribute vec4 aTextureCoordinate;
+            varying vec2 vTextureCoord;
+            void main() {
+                vTextureCoord = (uTextureMatrix * aTextureCoordinate).xy;
+                gl_Position = aPosition;
+            }
+    );
+}
+
+const char *ImageBaseFilter::getFragmentShaderString() {
+    return GET_STR(
+            precision highp float;
+            varying vec2 vTextureCoord;
+            uniform sampler2D uTexture;
+            void main() {
+                gl_FragColor = vec4(texture2D(uTexture, vTextureCoord).xyz, 0.4);
+//            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+            }
+    );
 }

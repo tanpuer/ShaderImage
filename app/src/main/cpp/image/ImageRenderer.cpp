@@ -39,6 +39,7 @@ void ImageRenderer::ImageCreated(int width, int height) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     baseFilter = new ImageBaseFilter();
+    baseFilter->init();
     baseFilter->setImageViewSize(width, height);
     glViewport(0, 0, bitmapWidth, bitmapHeight);
 

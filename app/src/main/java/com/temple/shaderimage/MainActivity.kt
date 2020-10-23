@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.res.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -21,9 +22,9 @@ class MainActivity : AppCompatActivity() {
 //        val bitmap = Bitmap.createBitmap(144, 144, Bitmap.Config.ALPHA_8)
         val canvas = Canvas(bitmap)
         canvas.drawARGB(255, 255, 255, 255)
-        val drawable = resources.getDrawable(R.mipmap.ic_launcher, null)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
+        val drawable = ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher, null)
+        drawable?.setBounds(0, 0, canvas.width, canvas.height)
+        drawable?.draw(canvas)
         shaderImageView.setImageBitmap(bitmap)
     }
 }

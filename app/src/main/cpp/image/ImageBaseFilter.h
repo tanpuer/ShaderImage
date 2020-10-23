@@ -9,6 +9,8 @@
 #include <GLES3/gl3.h>
 #include "../base/matrix_util.h"
 
+#define GET_STR(x) #x
+
 static GLfloat imageVertex[] = {
         1.0f, 1.0f,
         -1.0f, 1.0f,
@@ -31,13 +33,19 @@ class ImageBaseFilter {
 
 public:
 
-    ImageBaseFilter();
+    ImageBaseFilter() {};
 
     ~ImageBaseFilter();
+
+    virtual void init();
 
     void setImageViewSize(int width, int height);
 
     virtual void doFrame(void *pixels, GLenum format);
+
+    virtual const char *getVertexShaderString();
+
+    virtual const char *getFragmentShaderString();
 
 private:
 
