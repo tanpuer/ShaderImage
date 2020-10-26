@@ -1,5 +1,6 @@
 package com.temple.shaderimage
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
@@ -26,5 +27,9 @@ class MainActivity : AppCompatActivity() {
         drawable?.draw(canvas)
         shaderImageView.setImageBitmap(bitmap)
         shaderImageView.setShaderType(1)
+
+        button.setOnClickListener {
+            startActivity(Intent(this, ListTestActivity::class.java))
+        }
     }
 }

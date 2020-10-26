@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_list.*
@@ -37,6 +38,16 @@ class ListTestActivity : AppCompatActivity() {
             holder.loadImage(position % 3)
         }
 
+    }
+
+    override fun onDestroy() {
+        //todo 看看能不能找到时机自动destroy
+        recyclerView.children.forEach {
+            if (it is ShaderImageView) {
+                it.release()
+            }
+        }
+        super.onDestroy()
     }
 
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

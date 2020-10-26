@@ -38,14 +38,12 @@ class ShaderImageView @JvmOverloads constructor(
         return mBitmap
     }
 
-    private external fun onCreate()
-    private external fun performShader(
-        width: Int,
-        height: Int,
-        shaderImageView: ShaderImageView,
-        shaderType: Int
-    )
+    fun release() {
+        onDestroy()
+    }
 
+    private external fun onCreate()
+    private external fun performShader(width: Int, height: Int, shaderImageView: ShaderImageView, shaderType: Int)
     private external fun onDestroy()
 
     companion object {

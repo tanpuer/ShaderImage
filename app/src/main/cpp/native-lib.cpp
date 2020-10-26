@@ -2,9 +2,12 @@
 #include <string>
 #include "image/ImageLooper.h"
 #include "android/native_window_jni.h"
+#include "base/native_log.h"
 
 ImageLooper *imageLooper = nullptr;
 JavaVM *javaVM;
+int imageViewRefCount = 0;
+
 extern "C" JNIEXPORT void JNICALL
 Java_com_temple_shaderimage_ShaderImageView_onCreate(
         JNIEnv *env,
@@ -12,6 +15,7 @@ Java_com_temple_shaderimage_ShaderImageView_onCreate(
     if (imageLooper == nullptr) {
         imageLooper = new ImageLooper(javaVM);
     }
+    imageViewRefCount++;
 }
 
 extern "C"
@@ -34,8 +38,11 @@ extern "C" JNIEXPORT void JNICALL
 Java_com_temple_shaderimage_ShaderImageView_onDestroy(
         JNIEnv *env,
         jobject thiz) {
-    if (imageLooper != nullptr) {
+    imageViewRefCount--;
+    ALOGD("ShaderImageView destroy %d", imageViewRefCount)
+    if (imageViewRefCount == 0 && imageLooper != nullptr) {
         imageLooper->quit();
+        imageLooper = nullptr;
     }
 }
 
