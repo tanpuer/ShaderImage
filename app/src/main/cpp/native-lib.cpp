@@ -9,10 +9,9 @@ extern "C" JNIEXPORT void JNICALL
 Java_com_temple_shaderimage_ShaderImageView_onCreate(
         JNIEnv *env,
         jobject shaderImageView) {
-    if (imageLooper != nullptr) {
-        delete imageLooper;
+    if (imageLooper == nullptr) {
+        imageLooper = new ImageLooper(javaVM);
     }
-    imageLooper = new ImageLooper(javaVM);
 }
 
 extern "C"
@@ -25,8 +24,6 @@ Java_com_temple_shaderimage_ShaderImageView_performShader(
         jobject javaShaderImageView,
         jint shaderType) {
     if (imageLooper != nullptr) {
-//        imageLooper->sendMessage(imageLooper->kMSGImageOnCreate, width, height);
-//        imageLooper->sendMessage(imageLooper->kMsgImageDoFrame);
         auto *imageData = new ImageData(shaderType, width, height);
         imageData->setShaderImageView(env, javaShaderImageView);
         imageLooper->sendMessage(imageLooper->kMsgRenderImageData, imageData);
@@ -37,7 +34,9 @@ extern "C" JNIEXPORT void JNICALL
 Java_com_temple_shaderimage_ShaderImageView_onDestroy(
         JNIEnv *env,
         jobject thiz) {
-
+    if (imageLooper != nullptr) {
+        imageLooper->quit();
+    }
 }
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {

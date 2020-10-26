@@ -3,7 +3,6 @@ package com.temple.shaderimage
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
-import android.util.Log
 import androidx.appcompat.widget.AppCompatImageView
 
 class ShaderImageView @JvmOverloads constructor(
@@ -36,7 +35,6 @@ class ShaderImageView @JvmOverloads constructor(
     }
 
     fun currentBitmap(): Bitmap? {
-        Log.d("ShaderImageView", "currentBitmap")
         return mBitmap
     }
 

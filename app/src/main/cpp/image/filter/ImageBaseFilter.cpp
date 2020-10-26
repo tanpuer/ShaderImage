@@ -22,7 +22,7 @@ void ImageBaseFilter::init() {
     textureMatrix = new ESMatrix();
     setIdentityM(textureMatrix);
     texture = createTexture(GL_TEXTURE_2D);
-    ALOGD("program %d %d %d %d", program, fragmentShader, vertexShader, texture)
+//    ALOGD("program %d %d %d %d", program, fragmentShader, vertexShader, texture)
     checkGLError("ImageBaseFilter");
 }
 
@@ -32,7 +32,7 @@ void ImageBaseFilter::setImageViewSize(int width, int height) {
 }
 
 void ImageBaseFilter::doFrame(void *pixels, GLenum format) {
-    ALOGD("doFrame %d", program)
+//    ALOGD("doFrame %d", program)
     glUseProgram(program);
 
     //attribute
@@ -40,18 +40,18 @@ void ImageBaseFilter::doFrame(void *pixels, GLenum format) {
     aPositionLocation = glGetAttribLocation(program, aPosition);
     glEnableVertexAttribArray(aPositionLocation);
     glVertexAttribPointer(aPositionLocation, 2, GL_FLOAT, GL_FALSE, 8, imageVertex);
-    ALOGD("aPositionLocation %d", aPositionLocation)
+//    ALOGD("aPositionLocation %d", aPositionLocation)
 
     aTextureCoordinateLocation = glGetAttribLocation(program, aTextureCoordinate);
     checkGLError("glGetAttribLocation");
     glEnableVertexAttribArray(aTextureCoordinateLocation);
     glVertexAttribPointer(aTextureCoordinateLocation, 2, GL_FLOAT, GL_FALSE, 8, imageTexture);
-    ALOGD("aTextureCoordinateLocation %d", aTextureCoordinateLocation)
+//    ALOGD("aTextureCoordinateLocation %d", aTextureCoordinateLocation)
 
     //uniform
     uTextureMatrixLocation = glGetUniformLocation(program, uTextureMatrix);
     glUniformMatrix4fv(uTextureMatrixLocation, 1, GL_FALSE, textureMatrix->m);
-    ALOGD("uTextureMatrixLocation %d", uTextureMatrixLocation)
+//    ALOGD("uTextureMatrixLocation %d", uTextureMatrixLocation)
 
     //texture
     uTextureLocation = glGetUniformLocation(program, uTexture);
@@ -63,7 +63,7 @@ void ImageBaseFilter::doFrame(void *pixels, GLenum format) {
                  GL_UNSIGNED_BYTE, pixels);
     checkGLError("glTexImage2D");
     glUniform1i(uTextureLocation, 0);
-    ALOGD("uTextureLocation %d", uTextureLocation)
+//    ALOGD("uTextureLocation %d", uTextureLocation)
 
     //draw triangles
     glDrawArrays(GL_TRIANGLES, 0, vertexCount);
@@ -93,7 +93,7 @@ const char *ImageBaseFilter::getFragmentShaderString() {
             varying vec2 vTextureCoord;
             uniform sampler2D uTexture;
             void main() {
-                gl_FragColor = vec4(texture2D(uTexture, vTextureCoord).xyz, 0.4);
+                gl_FragColor = vec4(texture2D(uTexture, vTextureCoord).xyz, 0.5);
 //            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
             }
     );

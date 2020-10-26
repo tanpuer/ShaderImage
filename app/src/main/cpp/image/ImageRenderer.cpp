@@ -10,6 +10,7 @@
 #include "assert.h"
 #include "../base/utils.h"
 #include "filter/ImageGrayFilter.h"
+#include "filter/ImageElecShockFilter.h"
 
 ImageRenderer::ImageRenderer(JavaVM *javaVM) {
     ALOGD("ImageRenderer init")
@@ -154,6 +155,10 @@ void ImageRenderer::initFilter(int type) {
     switch (type) {
         case 1 : {
             baseFilter = new ImageGrayFilter(type);
+            break;
+        }
+        case 2: {
+            baseFilter = new ImageElecShockFilter(type);
             break;
         }
         default: {

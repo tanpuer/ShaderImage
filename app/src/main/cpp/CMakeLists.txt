@@ -22,6 +22,7 @@ add_library( # Sets the name of the library.
         image/ImageRenderer.cpp
         image/filter/ImageBaseFilter.cpp
         image/filter/ImageGrayFilter.cpp
+        image/filter/ImageElecShockFilter.cpp
         image/ImageData.cpp
 
         native-lib.cpp)
