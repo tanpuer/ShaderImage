@@ -5,8 +5,8 @@
 #include "ImageLooper.h"
 #include "../base/native_log.h"
 
-ImageLooper::ImageLooper(JavaVM* javaVM, jobject shaderImageView) {
-    renderer = new ImageRenderer(javaVM, shaderImageView);
+ImageLooper::ImageLooper(JavaVM* javaVM) {
+    renderer = new ImageRenderer(javaVM);
 }
 
 ImageLooper::~ImageLooper() {
@@ -15,21 +15,15 @@ ImageLooper::~ImageLooper() {
 
 void ImageLooper::handleMessage(Looper::LooperMessage *msg) {
     switch (msg->what) {
-        case kMSGImageOnCreate: {
-            if (renderer != nullptr) {
-                renderer->ImageCreated(msg->arg1, msg->arg2);
-            }
-            break;
-        }
-        case kMsgImageDoFrame: {
-            if (renderer != nullptr) {
-                renderer->ImageDoFrame();
-            }
-            break;
-        }
         case kMsgImageOnDestroy: {
             if (renderer != nullptr) {
                 renderer->ImageDestroyed();
+            }
+            break;
+        }
+        case kMsgRenderImageData: {
+            if (renderer != nullptr) {
+                renderer->renderImageData(static_cast<ImageData *>(msg->obj));
             }
             break;
         }

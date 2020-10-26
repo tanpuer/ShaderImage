@@ -15,12 +15,11 @@ class ImageLooper : public Looper{
 public:
 
     enum {
-        kMSGImageOnCreate,
-        kMsgImageDoFrame,
-        kMsgImageOnDestroy
+        kMsgImageOnDestroy,
+        kMsgRenderImageData
     };
 
-    ImageLooper(JavaVM* javaVM, jobject shaderImageView);
+    ImageLooper(JavaVM* javaVM);
 
     virtual ~ImageLooper();
 

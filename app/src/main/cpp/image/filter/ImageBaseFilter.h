@@ -7,7 +7,7 @@
 
 
 #include <GLES3/gl3.h>
-#include "../base/matrix_util.h"
+#include "../../base/matrix_util.h"
 
 #define GET_STR(x) #x
 
@@ -33,13 +33,15 @@ class ImageBaseFilter {
 
 public:
 
-    ImageBaseFilter() {};
+    ImageBaseFilter(int type) { this->type = type; };
 
     ~ImageBaseFilter();
 
     virtual void init();
 
     void setImageViewSize(int width, int height);
+
+    bool isSameType(int newType) const;
 
     virtual void doFrame(void *pixels, GLenum format);
 
@@ -68,6 +70,8 @@ private:
 
     int bitmapWidth;
     int bitmapHeight;
+
+    int type;
 };
 
 

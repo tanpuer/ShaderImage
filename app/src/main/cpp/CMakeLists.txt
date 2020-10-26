@@ -20,7 +20,9 @@ add_library( # Sets the name of the library.
 
         image/ImageLooper.cpp
         image/ImageRenderer.cpp
-        image/ImageBaseFilter.cpp
+        image/filter/ImageBaseFilter.cpp
+        image/filter/ImageGrayFilter.cpp
+        image/ImageData.cpp
 
         native-lib.cpp)
 

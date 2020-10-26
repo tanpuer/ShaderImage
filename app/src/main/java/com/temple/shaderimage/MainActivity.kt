@@ -1,7 +1,6 @@
 package com.temple.shaderimage
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,5 +25,6 @@ class MainActivity : AppCompatActivity() {
         drawable?.setBounds(0, 0, canvas.width, canvas.height)
         drawable?.draw(canvas)
         shaderImageView.setImageBitmap(bitmap)
+        shaderImageView.setShaderType(1)
     }
 }

@@ -12,7 +12,7 @@ Java_com_temple_shaderimage_ShaderImageView_onCreate(
     if (imageLooper != nullptr) {
         delete imageLooper;
     }
-    imageLooper = new ImageLooper(javaVM, env->NewGlobalRef(shaderImageView));
+    imageLooper = new ImageLooper(javaVM);
 }
 
 extern "C"
@@ -21,11 +21,15 @@ Java_com_temple_shaderimage_ShaderImageView_performShader(
         JNIEnv *env,
         jobject thiz,
         jint width,
-        jint height) {
+        jint height,
+        jobject javaShaderImageView,
+        jint shaderType) {
     if (imageLooper != nullptr) {
-        imageLooper->sendMessage(imageLooper->kMSGImageOnCreate, width, height);
-        imageLooper->sendMessage(imageLooper->kMsgImageDoFrame);
-        imageLooper->quit();
+//        imageLooper->sendMessage(imageLooper->kMSGImageOnCreate, width, height);
+//        imageLooper->sendMessage(imageLooper->kMsgImageDoFrame);
+        auto *imageData = new ImageData(shaderType, width, height);
+        imageData->setShaderImageView(env, javaShaderImageView);
+        imageLooper->sendMessage(imageLooper->kMsgRenderImageData, imageData);
     }
 }
 

@@ -3,7 +3,7 @@
 //
 
 #include "ImageBaseFilter.h"
-#include "../base/gl_utils.h"
+#include "../../base/gl_utils.h"
 
 ImageBaseFilter::~ImageBaseFilter() {
     glDeleteProgram(program);
@@ -97,4 +97,8 @@ const char *ImageBaseFilter::getFragmentShaderString() {
 //            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
             }
     );
+}
+
+bool ImageBaseFilter::isSameType(int newType) const {
+    return this->type == newType;
 }
