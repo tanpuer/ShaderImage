@@ -11,6 +11,7 @@
 #include "../base/utils.h"
 #include "filter/ImageGrayFilter.h"
 #include "filter/ImageElecShockFilter.h"
+#include "filter/ImageGaussionBlurFilter.h"
 
 ImageRenderer::ImageRenderer(JavaVM *javaVM) {
     ALOGD("ImageRenderer init")
@@ -159,6 +160,10 @@ void ImageRenderer::initFilter(int type) {
         }
         case 2: {
             baseFilter = new ImageElecShockFilter(type);
+            break;
+        }
+        case 3: {
+            baseFilter = new ImageGaussionBlurFilter(type);
             break;
         }
         default: {

@@ -35,7 +35,8 @@ class ListTestActivity : AppCompatActivity() {
             //0 - origin
             //1 - gray
             //2 - electric shock
-            holder.loadImage(position % 3)
+            //3 - gaussion blur
+            holder.loadImage(position % 4)
         }
 
     }
