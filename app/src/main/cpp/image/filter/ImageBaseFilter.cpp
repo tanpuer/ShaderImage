@@ -93,8 +93,7 @@ const char *ImageBaseFilter::getFragmentShaderString() {
             varying vec2 vTextureCoord;
             uniform sampler2D uTexture;
             void main() {
-                gl_FragColor = vec4(texture2D(uTexture, vTextureCoord).xyz, 0.5);
-//            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+                gl_FragColor = texture2D(uTexture, vTextureCoord);
             }
     );
 }

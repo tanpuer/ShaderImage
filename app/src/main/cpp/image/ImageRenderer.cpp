@@ -42,6 +42,8 @@ void ImageRenderer::ImageCreated(int width, int height) {
     glDisable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//    glClearColor(1.0, 1.0, 1.0, 0.0);
+    glClearColor(0.0, 0.0, 0.0, 0.0);
     glViewport(0, 0, bitmapWidth, bitmapHeight);
 
     GLint imp_fmt, imp_type;
@@ -112,7 +114,8 @@ void ImageRenderer::ImageDoFrame(ImageData *imageData) {
     } else {
         ALOGD("AndroidBitmap_lockPixels() success")
     }
-    glClearColor(1.0, 1.0, 1.0, 1.0);
+//    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
     if (baseFilter != nullptr) {
         //使用bitmapPixels进行贴图

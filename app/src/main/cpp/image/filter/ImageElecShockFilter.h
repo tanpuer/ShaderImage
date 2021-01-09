@@ -14,6 +14,8 @@ public:
 
     ImageElecShockFilter(int type);
 
+    ~ImageElecShockFilter();
+
     virtual const char *getFragmentShaderString();
 
 };
