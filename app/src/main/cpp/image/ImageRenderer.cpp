@@ -7,11 +7,11 @@
 #include "../base/gl_utils.h"
 #include <GLES3/gl3.h>
 #include <android/bitmap.h>
+#include <image/filter/ImageGaussionTwoPathFilter.h>
 #include "assert.h"
 #include "../base/utils.h"
 #include "filter/ImageGrayFilter.h"
 #include "filter/ImageElecShockFilter.h"
-#include "filter/ImageGaussionBlurFilter.h"
 
 ImageRenderer::ImageRenderer(JavaVM *javaVM) {
     ALOGD("ImageRenderer init")
@@ -163,7 +163,7 @@ void ImageRenderer::initFilter(int type) {
             break;
         }
         case 3: {
-            baseFilter = new ImageGaussionBlurFilter(type);
+            baseFilter = new ImageGaussionTwoPathFilter(type);
             break;
         }
         default: {

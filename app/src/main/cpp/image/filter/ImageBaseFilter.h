@@ -39,17 +39,19 @@ public:
 
     virtual void init();
 
-    void setImageViewSize(int width, int height);
+    virtual void setImageViewSize(int width, int height);
 
     bool isSameType(int newType) const;
 
     virtual void doFrame(void *pixels, GLenum format);
 
+    virtual void doFrame2(GLuint frameBufferTextureId) {}
+
     virtual const char *getVertexShaderString();
 
     virtual const char *getFragmentShaderString();
 
-private:
+protected:
 
     GLuint vertexShader = 0;
     GLuint fragmentShader = 0;

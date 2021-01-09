@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         drawable?.setBounds(0, 0, canvas.width, canvas.height)
         drawable?.draw(canvas)
         shaderImageView.setImageBitmap(bitmap)
-        shaderImageView.setShaderType(1)
+        shaderImageView.setShaderType(3)
 
         button.setOnClickListener {
             startActivity(Intent(this, ListTestActivity::class.java))

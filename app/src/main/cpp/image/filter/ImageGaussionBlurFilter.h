@@ -12,13 +12,24 @@ class ImageGaussionBlurFilter : public ImageBaseFilter {
 
 public:
 
-    ImageGaussionBlurFilter(int type);
+    enum {
+        kGuassionBlurHorizontal,
+        kGaussionBlurVertical
+    };
+
+    ImageGaussionBlurFilter(int type, int orientation);
 
     ~ImageGaussionBlurFilter();
 
     const char *getFragmentShaderString() override;
 
     const char *getVertexShaderString() override;
+
+    void doFrame2(GLuint frameBufferTextureId) override;
+
+private:
+
+    int orientation = kGuassionBlurHorizontal;
 };
 
 
