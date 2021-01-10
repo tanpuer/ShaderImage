@@ -11,5 +11,4 @@
 
 目前看来还存在的问题：
 1. 无法自动释放native的线程，需要手动调用ShaderImageView的release方法。
-2. 创建的bitmap无法复用，isMutable = true。
-3. 由于glReadPixels一般只支持rgba和rgb，所以bitmap暂时也只能支持这2种格式，不然就要引入libYUV来进行转换，违背精简的初衷。
+2. 由于glReadPixels一般只支持rgba和rgb，所以bitmap暂时也只能支持这2种格式，不然就要引入libYUV来进行转换，违背精简的初衷。

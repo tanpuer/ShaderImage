@@ -60,15 +60,15 @@ class ListTestActivity : AppCompatActivity() {
             val options = BitmapFactory.Options()
             //todo 会导致不能复用bitmap，增大内存抖动，但是如果复用bitmap，在c层读取bitmap内容再修改会有问题。
             //todo 快速滑动的时候没必要进行shader
-            options.inMutable = true
+//            options.inMutable = true
             val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher, options)
 
-            val bitmap2 = Bitmap.createBitmap(144, 144, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap2)
-            canvas.drawARGB(255, 255, 255, 255)
-            val drawable = ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher, null)
-            drawable?.setBounds(0, 0, canvas.width, canvas.height)
-            drawable?.draw(canvas)
+//            val bitmap2 = Bitmap.createBitmap(144, 144, Bitmap.Config.ARGB_8888)
+//            val canvas = Canvas(bitmap2)
+//            canvas.drawARGB(255, 255, 255, 255)
+//            val drawable = ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher, null)
+//            drawable?.setBounds(0, 0, canvas.width, canvas.height)
+//            drawable?.draw(canvas)
 
             itemView.shaderImageView.setImageBitmap(bitmap)
 //            itemView.shaderImageView.setImageBitmap(bitmap2)
