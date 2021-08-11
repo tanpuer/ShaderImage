@@ -41,7 +41,7 @@ Java_com_temple_shaderimage_ShaderImageView_onDestroy(
     imageViewRefCount--;
     ALOGD("ShaderImageView destroy %d", imageViewRefCount)
     if (imageViewRefCount == 0 && imageLooper != nullptr) {
-        imageLooper->quit();
+        imageLooper->quitSafely();
         imageLooper = nullptr;
     }
 }

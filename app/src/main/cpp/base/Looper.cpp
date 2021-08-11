@@ -18,7 +18,7 @@ Looper::Looper() {
 
 Looper::~Looper() {
     if (running) {
-        quit();
+        quitSafely();
     }
 }
 
@@ -45,6 +45,22 @@ void Looper::sendMessage(int what, int arg1, int arg2, void *obj) {
 }
 
 void Looper::quit() {
+    sem_wait(&headwriteprotect);
+    if (head != nullptr) {
+        head->quit = true;
+    } else {
+        auto *msg = new LooperMessage();
+        msg->what = quitMessage;
+        msg->arg1 = 0;
+        msg->arg2 = 0;
+        msg->obj = nullptr;
+        msg->quit = true;
+        addMessage(msg);
+    }
+    sem_post(&headwriteprotect);
+}
+
+void Looper::quitSafely() {
     auto *msg = new LooperMessage();
     msg->what = quitMessage;
     msg->arg1 = 0;

@@ -7,7 +7,7 @@ aux_source_directory(src/main/cpp/image srcs)
 aux_source_directory(src/main/cpp/image/filter srcs)
 
 add_library(
-        native-lib
+        shaderImage
         SHARED
         ${srcs}
 )
@@ -23,7 +23,7 @@ include_directories(
 )
 
 target_link_libraries(
-        native-lib
+        shaderImage
         android EGL GLESv3
         jnigraphics
         ${log-lib})

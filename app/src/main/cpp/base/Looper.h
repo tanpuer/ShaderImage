@@ -39,6 +39,8 @@ public:
 
     void quit();
 
+    void quitSafely();
+
     virtual void pthreadExit();
 
     int quitMessage = -100;

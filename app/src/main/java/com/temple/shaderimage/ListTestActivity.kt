@@ -44,16 +44,6 @@ class ListTestActivity : AppCompatActivity() {
 
     }
 
-    override fun onDestroy() {
-        //todo 看看能不能找到时机自动destroy
-        recyclerView.children.forEach {
-            if (it is ShaderImageView) {
-                it.release()
-            }
-        }
-        super.onDestroy()
-    }
-
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun loadImage(type: Int) {
