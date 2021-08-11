@@ -50,6 +50,7 @@ class ShaderImageView @JvmOverloads constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private fun onActivityDestroy() {
         Log.d(TAG, "onActivityDestroyed")
+        (context as? AppCompatActivity)?.lifecycle?.removeObserver(this)
         onDestroy()
     }
 
