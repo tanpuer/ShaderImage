@@ -8,6 +8,7 @@
 
 #include <GLES3/gl3.h>
 #include "../../base/matrix_util.h"
+#include "memory"
 
 #define GET_STR(x) #x
 
@@ -68,7 +69,7 @@ protected:
     GLint aTextureCoordinateLocation = -1;
     GLint uTextureLocation = -1;
 
-    ESMatrix *textureMatrix;
+    std::unique_ptr<ESMatrix> textureMatrix;
 
     int bitmapWidth;
     int bitmapHeight;

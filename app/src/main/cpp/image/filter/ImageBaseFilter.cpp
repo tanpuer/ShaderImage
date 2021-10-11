@@ -10,7 +10,6 @@ ImageBaseFilter::~ImageBaseFilter() {
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     glDeleteTextures(1, &texture);
-    delete textureMatrix;
     ALOGD("ImageBaseFilter release")
 }
 
@@ -19,8 +18,8 @@ void ImageBaseFilter::init() {
     fragmentShader = loadShader(GL_FRAGMENT_SHADER, getFragmentShaderString());
     program = createShaderProgram(vertexShader, fragmentShader);
     glUseProgram(program);
-    textureMatrix = new ESMatrix();
-    setIdentityM(textureMatrix);
+    textureMatrix = std::make_unique<ESMatrix>();
+    setIdentityM(textureMatrix.get());
     texture = createTexture(GL_TEXTURE_2D);
 //    ALOGD("program %d %d %d %d", program, fragmentShader, vertexShader, texture)
     checkGLError("ImageBaseFilter");
@@ -32,7 +31,6 @@ void ImageBaseFilter::setImageViewSize(int width, int height) {
 }
 
 void ImageBaseFilter::doFrame(void *pixels, GLenum format) {
-//    ALOGD("doFrame %d", program)
     glUseProgram(program);
 
     //attribute
@@ -40,18 +38,15 @@ void ImageBaseFilter::doFrame(void *pixels, GLenum format) {
     aPositionLocation = glGetAttribLocation(program, aPosition);
     glEnableVertexAttribArray(aPositionLocation);
     glVertexAttribPointer(aPositionLocation, 2, GL_FLOAT, GL_FALSE, 8, imageVertex);
-//    ALOGD("aPositionLocation %d", aPositionLocation)
 
     aTextureCoordinateLocation = glGetAttribLocation(program, aTextureCoordinate);
     checkGLError("glGetAttribLocation");
     glEnableVertexAttribArray(aTextureCoordinateLocation);
     glVertexAttribPointer(aTextureCoordinateLocation, 2, GL_FLOAT, GL_FALSE, 8, imageTexture);
-//    ALOGD("aTextureCoordinateLocation %d", aTextureCoordinateLocation)
 
     //uniform
     uTextureMatrixLocation = glGetUniformLocation(program, uTextureMatrix);
     glUniformMatrix4fv(uTextureMatrixLocation, 1, GL_FALSE, textureMatrix->m);
-//    ALOGD("uTextureMatrixLocation %d", uTextureMatrixLocation)
 
     //texture
     uTextureLocation = glGetUniformLocation(program, uTexture);
@@ -63,7 +58,6 @@ void ImageBaseFilter::doFrame(void *pixels, GLenum format) {
                  GL_UNSIGNED_BYTE, pixels);
     checkGLError("glTexImage2D");
     glUniform1i(uTextureLocation, 0);
-//    ALOGD("uTextureLocation %d", uTextureLocation)
 
     //draw triangles
     glDrawArrays(GL_TRIANGLES, 0, vertexCount);
