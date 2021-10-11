@@ -131,6 +131,13 @@ void ImageRenderer::ImageDoFrame(ImageData *imageData) {
     AndroidBitmap_unlockPixels(env, bitmap);
     long endTime = javaTimeMillis();
     ALOGD("process image cost time: %ld", endTime - startTime)
+
+    //postInvalidate
+    jmethodID postInvalidate = env->GetMethodID(clazz, "postInvalidate", "()V");
+    if (postInvalidate != nullptr) {
+        env->CallVoidMethod(imageData->shaderImageView, postInvalidate);
+    }
+
     //清理imageData
     imageData->releaseShaderImageView(env);
 }

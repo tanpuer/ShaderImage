@@ -47,6 +47,11 @@ class ShaderImageView @JvmOverloads constructor(
         return mBitmap
     }
 
+    override fun postInvalidate() {
+        Log.d(TAG, "postInvalidate")
+        super.postInvalidate()
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private fun onActivityDestroy() {
         Log.d(TAG, "onActivityDestroyed")
