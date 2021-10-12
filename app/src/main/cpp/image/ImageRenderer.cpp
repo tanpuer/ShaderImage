@@ -114,15 +114,12 @@ void ImageRenderer::ImageDoFrame(ImageData *imageData) {
     } else {
         ALOGD("AndroidBitmap_lockPixels() success")
     }
-//    glClearColor(1.0, 1.0, 1.0, 1.0);
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
     if (baseFilter != nullptr) {
         //使用bitmapPixels进行贴图
         baseFilter->doFrame(bitmapPixels, format);
     }
-    glFlush();
-    checkGLError("glFlush");
     auto *buffer = static_cast<unsigned char *>(malloc((size_t) size));
     glReadPixels(0, 0, bitmapWidth, bitmapHeight, format, GL_UNSIGNED_BYTE, buffer);
     checkGLError("glReadPixels");
