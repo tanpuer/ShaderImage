@@ -48,6 +48,8 @@ private:
 
     int bitmapFormat = 0;
 
+    int status;
+
 };
 
 #endif //SHADERIMAGE_IMAGERENDERER_H

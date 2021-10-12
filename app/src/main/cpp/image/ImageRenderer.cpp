@@ -31,7 +31,14 @@ ImageRenderer::~ImageRenderer() {
 
 void ImageRenderer::ImageCreated(int width, int height) {
     ALOGD("ImageCreated")
-    javaVM->AttachCurrentThread(&env, nullptr);
+    status = javaVM->GetEnv((void **) (&env), JNI_VERSION_1_6);
+    if (status == JNI_EDETACHED || env == nullptr) {
+        status = javaVM->AttachCurrentThread(&env, nullptr);
+        if (status < 0) {
+            ALOGE("get JNIEnv error %d", status)
+            return;
+        }
+    }
     bitmapWidth = width;
     bitmapHeight = height;
     eglCore = new egl_core(nullptr, FLAG_TRY_GLES3);
